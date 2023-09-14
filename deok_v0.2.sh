@@ -4,7 +4,7 @@ pwdpath=`pwd -P`
 sed -i "1 i\\### Last Run DATE : `date +'%Y-%m-%d (%H:%M:%S)'`" $pwdpath/deok.sh
 #!/bin/bash
 banners ()
-{ echo -e " \n\033[0;34m###########################\nMake By. DY.JIN  \nEmail: dkjin@covision.co.kr\n한번입력한 값은 바꿀수 없습니다. 주의해서 입력해주세요.\nLinux 8 버전 Private환경은 지원하지 않습니다.\n###########################\033[0m " 
+{ echo -e " \n\033[0;34m###########################\nMake By. JDY \n한번입력한 값은 바꿀수 없습니다. 주의해서 입력해주세요.\nLinux 8 버전 Private환경은 지원하지 않습니다.\n###########################\033[0m " 
 }
 banners
 
