@@ -1,17 +1,4 @@
 #!/bin/bash
-# pid 생성 을 해서 중복실행을 방지하는 코드 - made by Enteroa (san0123a@naver.com)
-
-        if [ -s $0.pid ]
-        then exist_pid=`cat $0.pid`
-        if [ -z `ps -e|grep "^$exist_pid "` ]
-        then
-                rm -f $0.pid;exec_confirm="Y"
-        else exec_confirm="N"
-                        echo -e "\e[1;32mShell has already running...\e[0m"
-fi
-        else exec_confirm="Y"
-fi
-
 
 # Edit : JDY
 # Global Variables
