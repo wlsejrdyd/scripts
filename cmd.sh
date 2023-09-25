@@ -1,3 +1,5 @@
+/etc/profile.d 경로에 넣어준다.
+
 # CMD Log
 HISTTIMEFORMAT="%Y-%m-%d [%H:%M:%S] "
 export HISTTIMEFORMAT
