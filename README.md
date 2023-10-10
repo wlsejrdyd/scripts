@@ -10,5 +10,6 @@ https://github.com/wlsejrdyd/scripts/blob/main/sync.sh
 역시 파일을 열어 "## Variables" 섹션을 수정하여 사용해보세요.
 
 # 기본세팅
-신규 VM을 생성하고,
 https://github.com/wlsejrdyd/scripts/blob/main/newvmstart_v1.2.sh
+신규 VM을 생성한 후 root 로 SSH를 통해 서버에 접근하여 동작시키면 됩니다.
+일반 계정을 생성하고 난수로 된 패스워드를 자동으로 입력해주며, SSH root 접근 비활성화. 변경한 SSH 포트를 추가할 수 있도록 firewalld 정책도 추가 할 수 있습니다.
