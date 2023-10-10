@@ -1,3 +1,4 @@
+```
 #!/bin/bash
 
 # Edit : JDY
@@ -113,3 +114,4 @@ fi
 
 # Delete
 $whi3 $dir1/ -name "$date1*" -exec rm -rf {} \;
+```
