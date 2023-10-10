@@ -1,8 +1,7 @@
 # 일일점검
-[daily_system_chk_v0.3.sh]
+[daily_system_chk_v0.3.sh] (https://github.com/wlsejrdyd/scripts/blob/main/daily_system_chk_v0.3.sh)
 서버에서 일일점검 스크립트를 실행하여 파일로 일주일간 데이터를 저장해서 관리할 수 있습니다.
 "## Variables" 섹션을 조절하여 사용해보세요?
-[daily_system_chk_v0.3.sh]: https://github.com/wlsejrdyd/scripts/blob/main/daily_system_chk_v0.3.sh
 
 
 # 로컬백업
