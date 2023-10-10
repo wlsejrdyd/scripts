@@ -2,7 +2,9 @@
 https://github.com/wlsejrdyd/scripts/blob/main/daily_system_chk_v0.3.sh
 서버에서 일일점검 스크립트를 실행하여 파일로 일주일간 데이터를 저장해서 관리할 수 있습니다.
 "## Variables" 섹션을 조절하여 사용해보세요?
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/569/badge)](https://bestpractices.coreinfrastructure.org/projects/569) [![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/kubernetes)](https://goreportcard.com/report/github.com/kubernetes/kubernetes) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/kubernetes/kubernetes)
+Kubernetes, also known as K8s, is an open source system for managing [containerized applications]
+across multiple hosts. It provides basic mechanisms for the deployment, maintenance,
+and scaling of applications.
 
 
 # 로컬백업
