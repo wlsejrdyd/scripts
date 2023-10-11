@@ -1,5 +1,4 @@
 ## 일일점검
-
 * [일일점검 (daily_system_chk_v0.3.sh)](https://github.com/wlsejrdyd/scripts/blob/main/daily_system_chk_v0.3.sh)
   * 7일 보관
   * 주요 보안파일 변조 확인 (월)
@@ -7,7 +6,6 @@
   * Variables 섹션 수정하여 사용
 
 ## 패스워드난수 설정
-
 * [난수설정 (randompw_v0.1.sh)](https://github.com/wlsejrdyd/scripts/blob/main/randompw_v0.1.sh)
   * UID 500 ~ 10000 사이 USER를 grep 해서 목록으로 보여준다. (선택지)
   * 대/소문자, 특수문자, 숫자 포함한 10자의 패스워드를 설정해줌
@@ -17,7 +15,6 @@
   * logger 를 이용하여 원격 로그서버로 전송도 가능함. (분실시 백업용도)
 
 ## 로컬백업
-
 * [로컬백업 (sync.sh)](https://github.com/wlsejrdyd/scripts/blob/main/sync.sh)
   * 다양한 디렉터리를 백업 디렉터리로 백업함
   * Backup Dir 섹션을 수정하여 사용
