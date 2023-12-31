@@ -283,8 +283,8 @@ if [ "$var2" == "0" ] ; then
 echo -n " Want History Command Log? (y/n) : "
 read var1
 	if [ "$var1" = "y" ] ; then
-		echo "local1.notice	/var/log/.cmd.log" >> /etc/rsyslog.conf
-		sed -i 's/cron.none/cron.none;local1.none/g' /etc/rsyslog.conf
+		echo "local4.notice	/var/log/cmd.log" >> /etc/rsyslog.conf
+		sed -i 's/cron.none/cron.none;local4.none/g' /etc/rsyslog.conf
 		echo "#CMD LOG
 HISTTIMEFORMAT=\"%Y-%m-%d [%H:%M:%S] \"
 export HISTTIMEFORMAT
@@ -301,7 +301,7 @@ function history_to_syslog() {
         fi
         if [ \"\$USERCMD\" != \"\$OLD_USERCMD\" ]
         then
- logger -p local1.notice -t bash -i \"\$USER\$(who am i|awk '{print \$5}'):\$PWD\$PP \$USERCMD\"
+ logger -p local4.notice -t bash -i \"\$USER\$(who am i|awk '{print \$5}'):\$PWD\$PP \$USERCMD\"
         fi
         OLD_USERCMD=\$USERCMD
         unset USERCMD PP
