@@ -77,7 +77,7 @@ todo
 sudo echo "${var1}			IN A            1.1.1.1
 ${var2}			IN A            2.2.2.2
 ${var3}			IN A            3.3.3.3
-${var4}			IN A            172.16.56.31" >> $dir1/$file1
+${var4}			IN A            4.4.4.4" >> $dir1/$file1
 dnsreload
 ;;
 * )
