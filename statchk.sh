@@ -7,8 +7,8 @@ dir1="/var/named"
 tm1=`date +"%Y%m%d"`
 #tm2=`date +"%Y%m%d%H%M"`
 tm3=`date +"%Y%m%d" -d '7days ago'`
-var1=`ping -c1 hisapp.deok.kr|head -2|xargs -I{} date '+%F %T{}'  && ping -c1 hisweb.deok.kr|head -2|xargs -I{} date '+%F %T{}' && ping -c1 hisimg.deok.kr |head -2|xargs -I{} date '+%F %T{}' && ping -c1 hisreport.deok.kr |head -2|xargs -I{} date '+%F %T{}'`
-dom1="hisapp.deok.kr hisimg.deok.kr hisweb.deok.kr hisreport.deok.kr"
+var1=`ping -c1 jinapp.deok.kr|head -2|xargs -I{} date '+%F %T{}'  && ping -c1 jinweb.deok.kr|head -2|xargs -I{} date '+%F %T{}' && ping -c1 jinimg.deok.kr |head -2|xargs -I{} date '+%F %T{}' && ping -c1 jinreport.deok.kr |head -2|xargs -I{} date '+%F %T{}'`
+dom1="jinapp.deok.kr jinimg.deok.kr jinweb.deok.kr jinreport.deok.kr"
 
 ### Ping check
 for i in $dom1
