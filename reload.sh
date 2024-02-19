@@ -1,7 +1,7 @@
 #!/bin/bash
 
 bann ()
-{ echo -e "## Make by. jindeokyong ##\n[INFO] Sub Domain IP LIST\n1. sub1 : 1.1.1.1\n2. sub2 : 2.2.2.2\n3. sub3 : 3.3.3.3\n4. sub4 : 4.4.4.4\n\n[INFO] HIS DR IP LIST\n1. sub1 : 5.5.5.5\n2. sub2 : 6.6.6.6\n3. sub3 : 7.7.7.7\n4. sub4 : 8.8.8.8
+{ echo -e "## Make by. jindeokyong ##\n[INFO] Sub Domain IP LIST\n1. sub1 : 1.1.1.1\n2. sub2 : 2.2.2.2\n3. sub3 : 3.3.3.3\n4. sub4 : 4.4.4.4\n\n[INFO] DR IP LIST\n1. sub1 : 5.5.5.5\n2. sub2 : 6.6.6.6\n3. sub3 : 7.7.7.7\n4. sub4 : 8.8.8.8
 \n\033[0;31m## [WARNING] Delete existing records and add new records. ##\033[0m"
 }
 bann
@@ -77,4 +77,4 @@ exit
 esac
 
 ### Delete
-#find $dir1/bak/* -type d -name "$tm3" -exec rm -rf {} \;
+find $dir1/bak/* -type d -name "$tm3" -exec rm -rf {} \;

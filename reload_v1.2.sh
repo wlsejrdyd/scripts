@@ -1,7 +1,7 @@
 #!/bin/bash
 
 bann ()
-{ echo -e "## Make by. jindeokyong ##\n[INFO] HIS IP LIST\n1. svc1 : 1.1.1.1\n2. svc2 : 2.2.2.2\n3. svc3 : 3.3.3.3\n4. svc4 : 4.4.4.4\n\n[INFO] HIS DR IP LIST\n1. svc1 : 5.5.5.5\n2. svc2 : 6.6.6.6\n3. svc3 : 7.7.7.7\n4. svc4 : 8.8.8.8
+{ echo -e "## Make by. jindeokyong ##\n[INFO] IP LIST\n1. svc1 : 1.1.1.1\n2. svc2 : 2.2.2.2\n3. svc3 : 3.3.3.3\n4. svc4 : 4.4.4.4\n\n[INFO] DR IP LIST\n1. svc1 : 5.5.5.5\n2. svc2 : 6.6.6.6\n3. svc3 : 7.7.7.7\n4. svc4 : 8.8.8.8
 \n\033[0;31m## [WARNING] Delete existing records and add new records. ##\033[0m"
 }
 bann
