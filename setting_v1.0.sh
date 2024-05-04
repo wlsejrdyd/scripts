@@ -1,15 +1,4 @@
-
 #!/bin/bash
-
-
-
-### Variables
-
-ranpw=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9!#%^*()_+'|fold -w 10 |sed 1q)
-
-
-
-### Banner
 
 bann ()
 
@@ -45,217 +34,245 @@ ALLOW PORT : $(firewall-cmd --list-port)
 
 root 접근권한은 막혀있습니다. 발급받으신 계정으로 관리자 권한 획득바랍니다.
 
-???? 보안정책으로, 서버방화벽을 이용하시는 것을 권장 드립니다.
+??? 보안정책으로, 서버방화벽을 이용하시는 것을 권장 드립니다.
 
-정책을 추가하실 경우 firewall-cmd 명령으로 하시면 됩니다."
+정책을 추가하실 경우 firewall-cmd 명령으로 하시면 됩니다.
+
+패스워드는 반드시 접속 후 변경하여 관리 해주시길 바랍니다."
 
 }
 
 
 
-read -p "[SELECT] user created(1) : " num1
+read -p "[SELECT] 1. ip setting | 2. user created : " num1
 
-case $num1 in 1 | user )
+case ${num1} in 1 )
+
+	read -p "Enter IP : " ip1
+
+	read -p "Enter GATEWAY : " gw1
+
+	read -p "Enter PREFIX : " prefix1
+
+	read -p "Enter DEVICE : " dev1
+
+	echo -e "[INFO]\nIP : ${ip1}\nGAYEWAY : ${gw1}\nNETMASK(PREFIX) : ${prefix1}\nDEV : ${dev1}"
+
+	read -p "[INFO] Press Enter Key" key
+
+	nmcli con mod ${dev1} ipv4.addresses ${ip1}/${prefix1} 
+
+	nmcli con show eth0  | grep "ipv4.method\|ipv4.address\|ipv4.gateway"
+
+	echo "[INFO] success, chage ip configuration"
+
+	nmcli con down ${dev1} && nmcli con up ${dev1}
+
+	exit 0
+
+;;
+
+
+
+
+
+2 )
 
 read -p "[INFO] Enter create username : " user1
 
 if [ $(cat /etc/passwd | grep ${user1}|wc -l) -eq 0 ] ; then
 
-        read -p "[INFO] Enter usercomments : " comm1
+	read -p "[INFO] Enter usercomments : " comm1
 
-        comm2=$(/usr/bin/cat /etc/passwd | grep ${user1} | wc -l)
+	comm2=$(/usr/bin/cat /etc/passwd | grep ${user1} | wc -l)
 
-                if [ -z "${comm1}" ] ; then
+		if [ -z "${comm1}" ] ; then
 
-                        echo "[FAILED] YOU MUST ENTER COMMENTS. TRY AGAIN."
+			echo "[ERROR] YOU MUST ENTER COMMENTS. TRY AGAIN."
 
-                        exit 1
+			exit 1
 
-                fi
+		fi
 
-generate_password() {
+password() {
 
-        local length="$1"
+	local length="$1"
 
-        local has_upper=false
+	local upper=false
 
-        local has_lower=false
+	local lower=false
 
-        local has_digit=false
+	local digit=false
 
-        local has_special=false
-
-
-
-        while true; do
-
-                password=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9!#%^*' | fold -w "$length" | sed 1q)
+	local special=false
 
 
 
-                for ((i = 0; i < length; i++)); do
+	while true; do
 
-                        char="${password:$i:1}"
-
-                        if [[ "$char" =~ [A-Z] ]]; then
-
-                            has_upper=true
-
-                        elif [[ "$char" =~ [a-z] ]]; then
-
-                            has_lower=true
-
-                        elif [[ "$char" =~ [0-9] ]]; then
-
-                            has_digit=true
-
-                        else
-
-                            has_special=true
-
-                        fi
-
-                done
+		password1=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9!#%^*' | fold -w "$length" | sed 1q)
 
 
 
-                if $has_upper && $has_lower && $has_digit && $has_special; then
+		for ((i = 0; i < length; i++)); do
 
-                        echo "$ranpw"
+			char="${password1:$i:1}"
 
-                        break
+			if [[ "$char" =~ [A-Z] ]]; then
 
-                fi
+			    upper=true
 
-        done
+			elif [[ "$char" =~ [a-z] ]]; then
+
+			    lower=true
+
+			elif [[ "$char" =~ [0-9] ]]; then
+
+			    digit=true
+
+			else
+
+			    special=true
+
+			fi
+
+	    	done
+
+
+
+		if $upper && $lower && $digit && $special; then
+
+			echo "$password1"
+
+			break
+
+		fi
+
+	done
 
 }
 
 
 
-        ranpw=$(generate_password 10)
+	ranpw=$(password 10)
 
-        echo -e "[INFO] password : $ranpw"
+	echo -e "[INFO] password : $ranpw"
 
-        /usr/sbin/useradd ${user1} -c "${comm1}" && echo "${ranpw}" | passwd --stdin ${user1}
+	/usr/sbin/useradd ${user1} -c "${comm1}" && echo "${ranpw}" | passwd --stdin ${user1}
 
-        if [ "$?" = "0" ]; then
+	if [ "$?" = "0" ]; then
 
-                echo -e "[INFO] password : $ranpw"
+		logger -p local4.notice "ID : ${user1} PW : ${ranpw}"
 
-                logger -p local4.notice "ID : ${user1} PW : ${ranpw}"
+	else
 
-        else
+		echo "[ERROR] user delete, try again"
 
-                echo "[ERROR] user delete, try again"
+		userdel -rf ${user1}
 
-                userdel -rf ${user1}
+		rm -rf /etc/sudoers.d/${user1}
 
-                rm -rf /etc/sudoers.d/${user1}
+		exit 1
 
-                exit 1
+	fi
 
-        fi
+	echo -e "[INFO] passwd files..\n$(/usr/bin/cat /etc/passwd | grep ${user1})"
 
-        echo -e "[INFO] passwd files..\n$(/usr/bin/cat /etc/passwd | grep ${user1})"
+	echo -e "[INFO] ${user1}\n$(/usr/bin/chage -l ${user1}|head -2)"
 
-        echo -e "[INFO] ${user1}\n$(/usr/bin/chage -l ${user1}|head -2)"
+	echo -e "${user1} ALL=(ALL) ALL" > /etc/sudoers.d/${user1}
 
-        echo -e "${user1} ALL=(ALL) ALL" > /etc/sudoers.d/${user1}
+	if [ -f "/etc/ssh/sshd_config.d/01-permitrootlogin.conf" ] ; then
 
-        chown ${user1}:${user1} /etc/sudoers.d/${user1}
+		ssh1=$(/usr/bin/cat /etc/ssh/sshd_config.d/01-permitrootlogin.conf | grep -i "permitrootlogin no"|grep -v "^#" | wc -l)
 
-        if [ -f "/etc/ssh/sshd_config.d/01-permitrootlogin.conf" ] ; then
+		ssh2=$(/usr/bin/cat /etc/ssh/sshd_config.d/01-permitrootlogin.conf |grep -i "permitrootlogin yes"|grep -v "^#" | wc -l)
 
-                ssh1=$(/usr/bin/cat /etc/ssh/sshd_config.d/01-permitrootlogin.conf | grep -i "permitrootlogin no"|grep -v "^#" | wc -l)
+			if [ ${ssh1} -eq 0 ] || [ ${ssh2} -eq 1 ]  ; then
 
-                ssh2=$(/usr/bin/cat /etc/ssh/sshd_config.d/01-permitrootlogin.conf |grep -i "permitrootlogin yes"|grep -v "^#" | wc -l)
+				/usr/bin/sed -i "/^PermitRoot/d" /etc/ssh/sshd_config.d/01-permitrootlogin.conf
 
-                        if [ ${ssh1} -eq 0 ] || [ ${ssh2} -eq 1 ]  ; then
+				echo "PermitRootLogin no" >> /etc/ssh/sshd_config.d/01-permitrootlogin.conf
 
-                                /usr/bin/sed -i "/^PermitRoot/d" /etc/ssh/sshd_config.d/01-permitrootlogin.conf
+				systemctl restart sshd
 
-                                echo "PermitRootLogin no" >> /etc/ssh/sshd_config.d/01-permitrootlogin.conf
+			else
 
-                                systemctl restart sshd
+				echo ""
 
-                        else
+			fi
 
-                                echo ""
+	else
 
-                        fi
+		ssh1=$(/usr/bin/cat /etc/ssh/sshd_config | grep -i "permitrootlogin no"|grep -v "^#" | wc -l)
 
-        else
+		ssh2=$(/usr/bin/cat /etc/ssh/sshd_config |grep -i "permitrootlogin yes"|grep -v "^#" | wc -l)
 
-                ssh1=$(/usr/bin/cat /etc/ssh/sshd_config | grep -i "permitrootlogin no"|grep -v "^#" | wc -l)
+			if [ ${ssh1} -eq 0 ] || [ ${ssh2} -eq 1 ]  ; then
 
-                ssh2=$(/usr/bin/cat /etc/ssh/sshd_config |grep -i "permitrootlogin yes"|grep -v "^#" | wc -l)
+				/usr/bin/sed -i "/^PermitRoot/d" /etc/ssh/sshd_config
 
-                        if [ ${ssh1} -eq 0 ] || [ ${ssh2} -eq 1 ]  ; then
+				echo "PermitRootLogin no" >> /etc/ssh/sshd_config
 
-                                /usr/bin/sed -i "/^PermitRoot/d" /etc/ssh/sshd_config
+				systemctl restart sshd
 
-                                echo "PermitRootLogin no" >> /etc/ssh/sshd_config
+			else
 
-                                systemctl restart sshd
+				echo ""
 
-                        else
+			fi
 
-                                echo ""
+	fi	
 
-                        fi
+	while [ : ] ; do
 
-        fi
+		echo -n "[SELECT] want allow port? (y/n) : "
 
-        while [ : ] ; do
+		read var1
 
-                echo -n "[SELECT] want allow port? (y/n) : "
+		case ${var1} in y | Y )
 
-                read var1
+			read -p "[INFO] Enter port : " port
 
-                case ${var1} in y | Y )
+			/usr/bin/systemctl restart firewalld
 
-                        read -p "[INFO] Enter port : " port
+			/usr/bin/firewall-cmd --permanent --add-port=${port}/tcp
 
-                        /usr/bin/systemctl restart firewalld
+			/usr/bin/firewall-cmd --reload
 
-                        /usr/bin/firewall-cmd --permanent --add-port=${port}/tcp
+			/usr/bin/firewall-cmd --list-ports
 
-                        /usr/bin/firewall-cmd --reload
+			echo -e "\n[INFO] success"
 
-                        /usr/bin/firewall-cmd --list-ports
+			info > ~/$(hostname)_info.txt
 
-                        echo -e "\n[INFO] success"
+			continue
 
-                        info > ~/$(hostname)_info.txt
+		;;
 
-                        continue
+		n | N )
 
-                ;;
+			echo -e "\n[INFO] success"
 
-                n | N )
+			info > ~/$(hostname)_info.txt
 
-                        echo -e "\n[INFO] success"
+			exit 0
 
-                        info > ~/$(hostname)_info.txt
+		;;
 
-                        exit 0
+		* )
 
-                ;;
+			continue
 
-                * )
+		;;
 
-                        continue
+		esac
 
-                ;;
-
-                esac
-
-        done
+	done
 
 else
 
-        echo "[ERROR] user ${user1} already exists"
+	echo "[ERROR] user ${user1} already exists"
 
 fi
 
@@ -263,9 +280,9 @@ fi
 
 * )
 
-        echo "[ERROR] select number."
+	echo "[ERROR] select number."
 
-        exit 1
+	exit 1
 
 ;;
 
