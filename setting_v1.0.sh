@@ -1,7 +1,9 @@
 #!/bin/bash
+
+
 bann ()
 {
-echo -e "## Make by. JDY ##"
+echo -e "## made by jdy ##"
 }
 bann
 

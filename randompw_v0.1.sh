@@ -1,5 +1,5 @@
 #!/bin/bash
-## Make by. JDY ##
+# made by jdy
 
 generate_password() {
     local length="$1"

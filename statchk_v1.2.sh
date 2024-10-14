@@ -1,6 +1,5 @@
 #!/bin/bash
-
-## Make by. jindeokyong ##
+# made by jdy
 
 ### Variables
 dir1="/var/named"

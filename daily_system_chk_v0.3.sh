@@ -1,8 +1,5 @@
 #!/bin/bash
-
-###########################
-### make by jindeokyong ###
-###########################
+# made by jdy
 
 ## variables
 user=jindeokyong

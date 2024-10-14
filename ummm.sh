@@ -1,4 +1,5 @@
 #!/bin/bash
+# made by jdy
 
 insert_file="/home/jindeokyong/20240328/team_code"
 while IFS= read -r line; do

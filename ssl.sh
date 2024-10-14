@@ -1,9 +1,9 @@
 #!/bin/bash
-
+# made by jdy
 
 clear
 echo  "====================================================="
-echo -e "\n\033[33m£¢apache v2 create SSL key,csr£¢\033[0m \n"
+echo -e "\n\033[33mï¿½ï¿½apache v2 create SSL key,csrï¿½ï¿½\033[0m \n"
 echo  "====================================================="
 
 

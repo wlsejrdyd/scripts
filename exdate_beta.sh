@@ -1,5 +1,5 @@
 #!/bin/bash
-# Maky by JDY
+# made by jdy
 
 dns1="${dns1}"
 var1=$(cat /root/20231026/${dns1}.zone | awk '{print $1}' | grep -v "^$\|;\|@\|IN\|TTL\|[0-9]\|${dns1}")

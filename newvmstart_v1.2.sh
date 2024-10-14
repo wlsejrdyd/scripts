@@ -1,4 +1,5 @@
 #!/bin/bash
+# made by jdy
 
 ### Variables
 ranpw=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9!#%^*()_+'|fold -w 10 |sed 1q)
