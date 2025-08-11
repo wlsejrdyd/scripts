@@ -14,7 +14,13 @@ backup_file_name="localbackup_v0.1.sh" # 백업 스크립트 파일 이름
 date1=`date +%Y%m%d -d '5day ago'`
 date2=`date +"%Y%m%d"`
 dir2="$dir1/$date2/backup.log"
+disk_usage_check ()
+{
 var1=`df -h | grep -v "boot\|tmpfs\|sr0" | awk '{print $5}' | cut -d "%" -f 1 | sort -rh | head -1`
+        if [ ! -d ${dir2} ] ; then
+                mkdir -p ${dir1}/${date2}
+        fi
+}
 
 # Added Schedule (cron)
 whi1=`which crontab`
@@ -38,22 +44,23 @@ var4=`$whi3 $dir1/ -name "${backup_file_name}" | wc -l`
         fi
 
 # Backup
-        for backup in ${backup_target_dir}
-        do
-                if [ "$var1" -lt "70" ] ; then
-                        echo -e " \n Starting Backup." >> $dir2
-                        echo " TIME : `date +%Y%m%d_%T` " >> $dir2
-                        echo " DISK USED : $var1 % " >> $dir2
-                        echo " BACKUP DIR : ${backup_target_dir}" >> $dir2
-                        rsync -av --progress ${backup_target_dir} $dir1/$date2/
-                        err1=`echo $?`
-                        echo -e "ERROR : $err1" >> $dir2
-                        echo "##############################" >> $dir2
-                else
-                        echo -e "${backup_target_dir}, FAILD BACKUP." >> $dir2
-                        echo "##############################" >> $dir2
-                fi
-        done
+for backup in ${backup_target_dir}
+do
+        disk_usage_check
+        if [ "$var1" -lt "70" ] ; then
+                echo -e " \n Starting Backup." >> $dir2
+                echo " TIME : `date +%Y%m%d_%T` " >> $dir2
+                echo " DISK USED : $var1 % " >> $dir2
+                echo " BACKUP DIR : ${backup}" >> $dir2
+                rsync -avz ${backup} $dir1/$date2/
+                err1=`echo $?`
+                echo -e "ERROR : $err1" >> $dir2
+                echo "##############################" >> $dir2
+        else
+                echo -e "${backup}, FAILD BACKUP." >> $dir2
+                echo "##############################" >> $dir2
+        fi
+done
 
 # Delete
 $whi3 $dir1/ -name "$date1*" -exec rm -rf {} \;
