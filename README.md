@@ -15,7 +15,7 @@
   * logger 를 이용하여 원격 로그서버로 전송도 가능함. (분실시 백업용도)
 
 ## 로컬백업
-* [로컬백업 (sync.sh)](https://github.com/wlsejrdyd/scripts/blob/main/sync.sh)
+* [로컬백업 (localbackup_v0.1.sh)](https://github.com/wlsejrdyd/scripts/blob/main/localbackup_v0.1.sh)
   * 다양한 디렉터리를 백업 디렉터리로 백업함
   * Backup Dir 섹션을 수정하여 사용
   * 용량 한도를 설정하여 사용량대비하여 백업이 진행되지않도록함
