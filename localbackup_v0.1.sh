@@ -17,7 +17,6 @@ dir2="$dir1/$date2/backup.log"
 var1=`df -h | grep -v "boot\|tmpfs\|sr0" | awk '{print $5}' | cut -d "%" -f 1 | sort -rh | head -1`
 
 # Added Schedule (cron)
-variables
 whi1=`which crontab`
 whi2=`which sh`
 var3=`$whi1 -l | grep ${backup_file_name} | wc -l`
