@@ -62,10 +62,10 @@ if [ ! -d "$dir1/bak/$tm1" ]; then
 	sudo mkdir -p $dir1/bak/$tm1
 fi
 ### Zone File Edit
-echo -e "\033[0;32m[Select]\n\033[0;33m(HIS or his). HIS -> DR\n(DR or dr). DR -> HIS\n3. Cancel \033[0m"
+echo -e "\033[0;32m[Select]\n\033[0;33m(PROD or prod). PRODUCT -> DEV\n(DEV or dev). DEV -> PRODUCT\n3. Cancel \033[0m"
 localselect="$1"
 case ${localselect} in
-DR | dr )
+DEV | dev )
 todo
 sudo echo "${var1}			IN A            5.5.5.5
 ${var2}			IN A            6.6.6.6
@@ -73,7 +73,7 @@ ${var3}			IN A            7.7.7.7
 ${var4}			IN A            8.8.8.8" >> $dir1/$file1
 dnsreload
 ;;
-HIS | his )
+PROD | prod )
 todo
 sudo echo "${var1}			IN A            1.1.1.1
 ${var2}			IN A            2.2.2.2
