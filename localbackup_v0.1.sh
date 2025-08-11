@@ -1,3 +1,4 @@
+-
 ```
 #!/bin/bash
 # made by jindeokyong
