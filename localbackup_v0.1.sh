@@ -1,5 +1,3 @@
--
-```
 #!/bin/bash
 # made by jindeokyong
 
@@ -60,4 +58,3 @@ var4=`$whi3 $dir1/ -name "${backup_file_name}" | wc -l`
 
 # Delete
 $whi3 $dir1/ -name "$date1*" -exec rm -rf {} \;
-```
