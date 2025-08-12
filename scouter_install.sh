@@ -4,6 +4,12 @@
 echo "[NOTICE] 스카우터 설치 스크립트를 실행 합니다. 문의 사항은 별도 연락 부탁드립니다." && sleep 1
 dir1="/app/scouter"
 infotxt="/tmp/info_scouter.txt"
+
+if [ $(id -u) -ne "0" ] ; then
+        echo "[WARNING] root 계정으로 실행 해주시길 바랍니다."
+        exit 1
+fi
+
 read -p "[NOTICE] 설치 디렉토리는 /app/scouter 로 \"고정\" 입니다. (y/n) : " var1
 case $var1 in
   y)
