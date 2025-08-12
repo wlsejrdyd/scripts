@@ -123,6 +123,8 @@ WantedBy=multi-user.target' > /usr/lib/systemd/system/scouter-host.service
       3)
         echo "[INFO] Agent-Java 설정를 시작 합니다."
         echo "준비중"
+        #obj_name=objtmpname
+        #net_collector_ip=serverip
         continue
         ;;
       0)
