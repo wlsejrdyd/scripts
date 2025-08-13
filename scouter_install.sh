@@ -1,7 +1,7 @@
 #!/bin/bash
 # made by jindeokyong
 
-echo "[NOTICE] 스카우터 설치 스크립트를 실행 합니다. 문의 사항은 별도 연락 부탁드립니다." && sleep 1
+echo "[NOTICE] 스카우터 설치 스크립트를 실행 합니다. 문의 사항은 별도 연락 부탁드립니다."
 sc_dir="/app/scouter"
 sc_infotxt="/tmp/info_scouter.txt"
 sc_svcid="scoutersvc"
@@ -11,20 +11,10 @@ if [ $(id -u) -ne "0" ] ; then
   exit 1
 fi
 
-read -p "[NOTICE] 설치 디렉토리는 /app/scouter 로 \"고정\" 입니다. (y/n) : " var
-case $var in
-  y)
-    echo "동의 하신다면 엔터를 눌러주세요."
-    read
-    echo ""
-    ;;
-  *)
-    echo "동의 하신다면 엔터를 눌러주세요."
-    read
-    echo ""
-    exit 1
-    ;;
-esac
+echo "[NOTICE] 설치 디렉토리는 /app/scouter 로 \"고정\" 입니다."
+  echo "충분히 이해 하셨으면 엔터를 눌러주세요."
+  read
+  sleep 1
 
 ## 계정 생성
 if [ $(cat /etc/passwd | grep $sc_svcid | wc -l) -eq 0 ] ; then
@@ -69,7 +59,7 @@ while true ; do
   read -p "(0~3) : " var
     case $var in
       1)
-        echo "[INFO] Scouter-Server 설정를 시작 합니다."
+        echo "[INFO] Scouter-Server 설정을 시작 합니다."
         if [ ! -f "$sc_dir/server/conf/scouter.conf" ] ; then
           echo "[WARNING] 설정파일이 없습니다."
         fi
@@ -112,7 +102,7 @@ WantedBy=multi-user.target" > /usr/lib/systemd/system/scouter-server.service
         continue
         ;;
       2)
-        echo "[INFO] Agent-Host 설정를 시작 합니다."
+        echo "[INFO] Agent-Host 설정을 시작 합니다."
         if [ ! -f "$sc_dir/agent.host/conf/scouter.conf" ] ; then
           echo "[WARNING] 설정파일이 없습니다."
         fi
@@ -144,7 +134,7 @@ WantedBy=multi-user.target" > /usr/lib/systemd/system/scouter-host.service
         continue
         ;;
       3)
-        echo "[INFO] Agent-Java 설정를 시작 합니다."
+        echo "[INFO] Agent-Java 설정을 시작 합니다."
         echo "[NOTICE] object 이름은 중복되지 않아야 합니다."
         read -p "(ex : Project1-WAS-01) : " objname
           sed -i "s@objtmpname@$objname@g" $sc_dir/agent.java/conf/scouter.conf && sleep 1
