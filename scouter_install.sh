@@ -173,3 +173,4 @@ export JAVA_OPTS="$JAVA_OPTS -Dscouter.config=${SCOUTER_AGENT_DIR}/conf/scouter.
         ;;
     esac
 done
+ 
