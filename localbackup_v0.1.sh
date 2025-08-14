@@ -1,7 +1,7 @@
 #!/bin/bash
 #made by jindeokyong
 
-## 아래 설정값을 확인해서 환경에 맞게 수정바람.\
+## 아래 설정값을 확인해서 환경에 맞게 수정바람.
 ## Global Variables
 dir1="/backup" # 백업디렉토리 지정
 backup_target_dir="/etc /usr /var" # 백업타겟
