@@ -1,19 +1,16 @@
 #!/bin/bash
-# made by jindeokyong 
+#made by jindeokyong
 
-##########################################################################
-#########################!!! Please Check !!!#############################
-##########################################################################
-# 아래 설정값을 확인해서 환경에 맞게 수정바람.
+## 아래 설정값을 확인해서 환경에 맞게 수정바람.\
+## Global Variables
 dir1="/backup" # 백업디렉토리 지정
 backup_target_dir="/etc /usr /var" # 백업타겟
 backup_file_name="localbackup_v0.1.sh" # 백업 스크립트 파일 이름
-##########################################################################
-
-# Global Variables
 date1=`date +%Y%m%d -d '5day ago'`
 date2=`date +"%Y%m%d"`
 dir2="$dir1/$date2/backup.log"
+
+## disk 사용량 확인 함수
 disk_usage_check ()
 {
 var1=`df -h | grep -v "boot\|tmpfs\|sr0" | awk '{print $5}' | cut -d "%" -f 1 | sort -rh | head -1`
@@ -22,7 +19,7 @@ var1=`df -h | grep -v "boot\|tmpfs\|sr0" | awk '{print $5}' | cut -d "%" -f 1 | 
         fi
 }
 
-# Added Schedule (cron)
+## 백업 스케쥴 cron 등록 및 백업 파일 위치 변경
 whi1=`which crontab`
 whi2=`which sh`
 var3=`$whi1 -l | grep ${backup_file_name} | wc -l`
@@ -31,7 +28,6 @@ var3=`$whi1 -l | grep ${backup_file_name} | wc -l`
                 echo "0 3 * * * /bin/sh $dir1/${backup_file_name}" >> /var/spool/cron/root
         fi
 
-# Move Backup Scriptfile
 whi3=`which find`
 whi4=`which mv`
 var4=`$whi3 $dir1/ -name "${backup_file_name}" | wc -l`
@@ -43,7 +39,7 @@ var4=`$whi3 $dir1/ -name "${backup_file_name}" | wc -l`
                 $whi4 $var5 $dir1/
         fi
 
-# Backup
+## 백업 동작
 for backup in ${backup_target_dir}
 do
         disk_usage_check
@@ -62,5 +58,5 @@ do
         fi
 done
 
-# Delete
+## 7일 지난 백업 데이터 삭제
 $whi3 $dir1/ -name "$date1*" -exec rm -rf {} \;
